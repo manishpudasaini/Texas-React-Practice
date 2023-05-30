@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import './StudentForm.css'
 import { creaetUser } from '../apis/users';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 
 function StudentForm() {
     const[student,setStudent] = useState({name:'',job:'',gender:''});
+    const[showSnackBar,setShowSnackBar] = useState(false)
+
+
     const handelSubmit=()=>{
         creaetUser(student).then((res)=>{
             console.log("user aded successfully",res);
+            setShowSnackBar(true)
         })
     }
     
@@ -38,6 +44,13 @@ function StudentForm() {
             </select><br/>
             <button type='submit'>Submit</button>
         </form>
+        <Snackbar open={showSnackBar} autoHideDuration={6000} onClose={()=>{setShowSnackBar(false)}}>
+            <Alert onClose={()=>{
+                setShowSnackBar(false)
+            }} severity="success" sx={{ width: '100%' }}>
+                User Added Successfully!!!!
+            </Alert>
+        </Snackbar>
 
     </div>
     </>
